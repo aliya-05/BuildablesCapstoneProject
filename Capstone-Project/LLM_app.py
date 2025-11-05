@@ -7,7 +7,7 @@ import os
 # Paths
 current_dir = os.path.dirname(__file__)
 MODEL_PATH = os.path.join(current_dir, "char_lstm_model.pth")
-TEXT_FILE = os.path.join(current_dir, "pile_uncopyrighted_100k.txt")
+TEXT_FILE = os.path.join(current_dir, "pile_uncopyrighted_50MB.txt")
 
 # Load dataset 
 with open(TEXT_FILE, "r", encoding="utf-8") as f:
