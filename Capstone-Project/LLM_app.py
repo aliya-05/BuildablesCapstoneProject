@@ -37,7 +37,7 @@ class CharLSTM(nn.Module):
 # Load model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = CharLSTM(vocab_size).to(device)
-model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
+model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device('cpu')))
 model.eval()
 
 # Text generation
