@@ -4,31 +4,6 @@ This repository contains the Buildables Capstone Project (Month 3) — an implem
 The project demonstrates how language modelling works at a basic level — generating text one character at a time by learning from sequences from English text. It simulates the early foundations of large-scale text models (like GPT) in a manageable, interpretable and local form.
 The model was trained using PyTorch, using open public-domain data, and was deployed via Streamlit as a simple web interface. 
 
-## Dataset Description 
-
-| Source            | Hugging Face Datasets → monology/pile-uncopyrighted                                  |
-|-------------------|--------------------------------------------------------------------------------------|
-| Type              | Public-domain English text dataset (Wikipedia, Books3, PubMed, StackExchange, etc.)  |
-| Full Size         | ≈ 825 GB (~20 million documents)                                                     |
-| Selected Portion  | ≈ 0.01 % subset (~100k documents)                                                    |
-| Reason for Choice | Public-domain, diverse linguistic content, safe and suitable for LLM training        |
-| Streaming Mode    | Enabled — no local download required                                                 |
-
-**Results:** 
-
-| Metric                   | Value                                                    |
-|--------------------------|----------------------------------------------------------| 
-| Documents processed      | 100,000                                                  |
-| Average raw text length  | ≈ 5002 characters                                        |
-| Average tokenized length | ≈ 344 tokens                                             |
-| Output file size         | ~150 MB (CSV + TXT combined)                             |
-| Languages                | English only                                             |
-| Tokenizer used           | GPT-2                                                    |
-| Output columns           | raw_text, tokenized_text                                 |
-| Final files              | pile_uncopyrighted_100k.csv, pile_uncopyrighted_100k.txt |
-
-*A 50-MB trimmed text file was used for local training feasibility: `pile_uncopyrighted_50MB.txt`.*
-
 ## Repository Structure 
 
 ``` 
@@ -60,6 +35,60 @@ BuildablesCapstoneProject/
     │                                  and generates text interactively from a user prompt
 ``` 
 
+## Dataset Description 
+
+| Source            | Hugging Face Datasets → monology/pile-uncopyrighted                                  |
+|-------------------|--------------------------------------------------------------------------------------|
+| Type              | Public-domain English text dataset (Wikipedia, Books3, PubMed, StackExchange, etc.)  |
+| Full Size         | ≈ 825 GB (~20 million documents)                                                     |
+| Selected Portion  | ≈ 0.01 % subset (~100k documents)                                                    |
+| Reason for Choice | Public-domain, diverse linguistic content, safe and suitable for LLM training        |
+| Streaming Mode    | Enabled — no local download required                                                 |
+
+**Results:** 
+
+| Metric                   | Value                                                    |
+|--------------------------|----------------------------------------------------------| 
+| Documents processed      | 100,000                                                  |
+| Average raw text length  | ≈ 5002 characters                                        |
+| Average tokenized length | ≈ 344 tokens                                             |
+| Output file size         | ~150 MB (CSV + TXT combined)                             |
+| Languages                | English only                                             |
+| Tokenizer used           | GPT-2                                                    |
+| Output columns           | raw_text, tokenized_text                                 |
+| Final files              | pile_uncopyrighted_100k.csv, pile_uncopyrighted_100k.txt |
+
+*A 50-MB trimmed text file was used for local training feasibility: `pile_uncopyrighted_50MB.txt`.*
+
+## Key Features
+- **Completely local** — no external API or cloud dependencies
+- **Character-level training** — model learns from raw text
+- **Interactive deployment** — accessible through Streamlit UI
+- **Modular structure** — easily extendable for further NLP tasks
+- **Transparent experimentation** — all notebooks are readable and editable
+
+## Application UI
+
+**Streamlit App:** https://buildablescapstoneproject.streamlit.app/ 
+
+**Interface:**
+A minimal and interactive Streamlit interface with:
+- Text prompt input
+- Sliders for text length and creativity (temperature)
+- Real-time generation results
+
+## Future Work 
+Although the model successfully generates coherent patterns, it can be significantly improved.
+Future enhancements:
+- **Train longer** — increase epochs and dataset size for better linguistic fluency.
+- **Switch to word-level modeling** for more semantic meaning.
+- **Add validation loss tracking** and early stopping to prevent overfitting.
+- **Add text quality evaluation metrics** (perplexity, coherence score, etc.).
+- **Fine-tune on domain-specific data** (medical, sports, etc.) for focused applications.
+- **Upgrade architecture** to GRU or Transformer for performance comparison.
+- **Expand UI** to include download/export options for generated text.
+- **Implement model versioning and automatic reloading** through Streamlit.
+
 ## How to Run This Project
 
 1. Clone the repository:
@@ -78,32 +107,3 @@ BuildablesCapstoneProject/
 9. Run the web app:
    ```bash
    streamlit run LLM_app.py
-
-## Application UI
-
-**Streamlit App:** https://buildablescapstoneproject.streamlit.app/ 
-
-**Interface:**
-A minimal and interactive Streamlit interface with:
-- Text prompt input
-- Sliders for text length and creativity (temperature)
-- Real-time generation results
-
-## Key Features
-- **Completely local** — no external API or cloud dependencies
-- **Character-level training** — model learns from raw text
-- **Interactive deployment** — accessible through Streamlit UI
-- **Modular structure** — easily extendable for further NLP tasks
-- **Transparent experimentation** — all notebooks are readable and editable
-
-## Future Work 
-Although the model successfully generates coherent patterns, it can be significantly improved.
-Future enhancements:
-- **Train longer** — increase epochs and dataset size for better linguistic fluency.
-- **Switch to word-level modeling** for more semantic meaning.
-- **Add validation loss tracking** and early stopping to prevent overfitting.
-- **Add text quality evaluation metrics** (perplexity, coherence score, etc.).
-- **Fine-tune on domain-specific data** (medical, sports, etc.) for focused applications.
-- **Upgrade architecture** to GRU or Transformer for performance comparison.
-- **Expand UI** to include download/export options for generated text.
-- **Implement model versioning and automatic reloading** through Streamlit.
