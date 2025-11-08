@@ -66,17 +66,22 @@ BuildablesCapstoneProject/
    git clone https://github.com/<your-username>/BuildablesCapstoneProject.git
    cd BuildablesCapstoneProject/Capstone-Project
 3. Install dependencies:
+   ```bash
    pip install -r ../requirements.txt
 5. Train the model:
+   ```bash
    jupyter notebook stage2-model-training.ipynb
 7. Evaluate the model:
+   ```bash
    jupyter notebook stage3-model-evaluation.ipynb
 9. Run the web app:
-    streamlit run LLM_app.py
+   ```bash
+   streamlit run LLM_app.py
+
+## Application UI
 
 **Streamlit App:** https://buildablescapstoneproject.streamlit.app/ 
 
-## Application UI
 Interface:
 A minimal and interactive Streamlit interface with:
 - Text prompt input
@@ -84,11 +89,11 @@ A minimal and interactive Streamlit interface with:
 - Real-time generation results
 
 ## Key Features
-- Completely local — no external API or cloud dependencies
-- Character-level training — model learns from raw text
-- Interactive deployment — accessible through Streamlit UI
-- Modular structure — easily extendable for further NLP tasks
-- Transparent experimentation — all notebooks are readable and editable
+- **Completely local** — no external API or cloud dependencies
+- **Character-level training** — model learns from raw text
+- **Interactive deployment** — accessible through Streamlit UI
+- **Modular structure** — easily extendable for further NLP tasks
+- **Transparent experimentation** — all notebooks are readable and editable
 
 ## Future Work 
 Although the model successfully generates coherent patterns, it can be significantly improved.
