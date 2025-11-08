@@ -31,6 +31,7 @@ The model was trained using PyTorch, using open public-domain data, and was depl
 
 ## Repository Structure 
 
+``` 
 BuildablesCapstoneProject/
 │
 ├── requirements.txt                → Dependencies for running the app
@@ -57,6 +58,7 @@ BuildablesCapstoneProject/
     │
     ├── LLM_app.py                   → Streamlit app that loads the trained model
     │                                  and generates text interactively from a user prompt
+``` 
 
 ## How to Run This Project
 
