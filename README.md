@@ -44,20 +44,19 @@ BuildablesCapstoneProject/
     │
     ├── stage2-model-training.ipynb → Trains the LSTM model on the text dataset
     │                                Includes:
-    │                                 - Data preprocessing
-    │                                 - Model definition
-    │                                 - Training loop and loss tracking
-    │                                 - Text generation test
-    │                                 - Model saving
+    │                                  - Data preprocessing
+    │                                  - Model definition
+    │                                  - Training loop and loss tracking
+    │                                  - Text generation test
+    │                                  - Model saving
     │
-    ├── stage3-model-evaluation.ipynb → Loads the model, evaluates quality, and
-    │                                   generates multiple text samples with
+    ├── stage3-model-evaluation.ipynb → Loads the model, evaluates quality, 
+    │                                   and generates multiple text samples with
     │                                   varying prompts and temperature values.
     │                                   Outputs stored in `evaluation_outputs.csv`.
     │
     ├── LLM_app.py                   → Streamlit app that loads the trained model
-    │                                  and generates text interactively from a
-    │                                  user prompt.
+    │                                  and generates text interactively from a user prompt
 
 ## How to Run This Project
 
@@ -98,12 +97,11 @@ A minimal and interactive Streamlit interface with:
 ## Future Work 
 Although the model successfully generates coherent patterns, it can be significantly improved.
 Future enhancements:
-- Train longer — increase epochs and dataset size for better linguistic fluency.
-- Switch to word-level modeling for more semantic meaning.
-- Add validation loss tracking and early stopping to prevent overfitting.
-- Add text quality evaluation metrics (perplexity, coherence score, etc.).
-- Fine-tune on domain-specific data (medical, sports, etc.) for focused applications.
-- Upgrade architecture to GRU or Transformer for performance comparison.
-- Expand UI to include download/export options for generated text.
-- Implement model versioning and automatic reloading through Streamlit.
-
+- **Train longer** — increase epochs and dataset size for better linguistic fluency.
+- **Switch to word-level modeling** for more semantic meaning.
+- **Add validation loss tracking** and early stopping to prevent overfitting.
+- **Add text quality evaluation metrics** (perplexity, coherence score, etc.).
+- **Fine-tune on domain-specific data** (medical, sports, etc.) for focused applications.
+- **Upgrade architecture** to GRU or Transformer for performance comparison.
+- **Expand UI** to include download/export options for generated text.
+- **Implement model versioning and automatic reloading** through Streamlit.
