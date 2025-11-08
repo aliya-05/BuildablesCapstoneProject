@@ -17,7 +17,7 @@ The model was trained using PyTorch, using open public-domain data, and was depl
 **Results:** 
 
 | Metric                   | Value                                                    |
-|---------- ---------------|----------------------------------------------------------| 
+|--------------------------|----------------------------------------------------------| 
 | Documents processed      | 100,000                                                  |
 | Average raw text length  | ≈ 5002 characters                                        |
 | Average tokenized length | ≈ 344 tokens                                             |
@@ -82,7 +82,7 @@ BuildablesCapstoneProject/
 
 **Streamlit App:** https://buildablescapstoneproject.streamlit.app/ 
 
-Interface:
+**Interface:**
 A minimal and interactive Streamlit interface with:
 - Text prompt input
 - Sliders for text length and creativity (temperature)
