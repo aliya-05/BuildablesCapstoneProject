@@ -26,10 +26,13 @@ def decode(l):
 
 # MODEL DEFINITION
 class CharLSTM(nn.Module):
-    def __init__(self, vocab_size, embed_size=128, hidden_size=256, num_layers=2):
+    def __init__(self, vocab_size, embed_size=128, hidden_size=256, num_layers=2, use_dropout=True):
         super(CharLSTM, self).__init__()
         self.embed = nn.Embedding(vocab_size, embed_size)
-        self.lstm = nn.LSTM(embed_size, hidden_size, num_layers, batch_first=True, dropout=0.2)
+        if use_dropout:
+            self.lstm = nn.LSTM(embed_size, hidden_size, num_layers, batch_first=True, dropout=0.2)
+        else:
+            self.lstm = nn.LSTM(embed_size, hidden_size, num_layers, batch_first=True)
         self.fc = nn.Linear(hidden_size, vocab_size)
 
     def forward(self, x, hidden=None):
@@ -40,17 +43,22 @@ class CharLSTM(nn.Module):
 
 # LOAD MODEL
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = CharLSTM(vocab_size).to(device)
 
-# Try to load extended model, fallback to original if it fails
+# Try extended model first (with dropout)
 try:
+    model = CharLSTM(vocab_size, use_dropout=True).to(device)
     model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
-    st.success("Extended model loaded successfully!")
+    st.success("✅ Extended model loaded successfully!")
 except:
-    # Fallback to original model
-    original_model_path = os.path.join(current_dir, "char_lstm_model.pth")
-    model.load_state_dict(torch.load(original_model_path, map_location=device))
-    st.warning("Using original model (extended model not compatible)")
+    # Fallback to original model (without dropout)
+    try:
+        model = CharLSTM(vocab_size, use_dropout=False).to(device)
+        original_model_path = os.path.join(current_dir, "char_lstm_model.pth")
+        model.load_state_dict(torch.load(original_model_path, map_location=device))
+        st.info("ℹ️ Using original model (extended model not found)")
+    except:
+        st.error("❌ Could not load any model. Please check model files.")
+        st.stop()
 
 model.eval()
 
