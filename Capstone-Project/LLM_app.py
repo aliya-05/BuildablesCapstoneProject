@@ -7,7 +7,7 @@ import re
 
 # PATH SETUP
 current_dir = os.path.dirname(os.path.abspath(__file__))  
-MODEL_PATH = os.path.join(current_dir, "char_lstm_model_extended.pth")
+MODEL_PATH = os.path.join(current_dir, "char_lstm_model.pth")  # Use original model
 TEXT_FILE = os.path.join(current_dir, "pile_uncopyrighted_50MB.txt")
 
 # LOAD DATASET
@@ -43,24 +43,11 @@ class CharLSTM(nn.Module):
 
 # LOAD MODEL
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-# Try extended model first (with dropout)
-try:
-    model = CharLSTM(vocab_size, use_dropout=True).to(device)
-    model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
-    st.success("✅ Extended model loaded successfully!")
-except:
-    # Fallback to original model (without dropout)
-    try:
-        model = CharLSTM(vocab_size, use_dropout=False).to(device)
-        original_model_path = os.path.join(current_dir, "char_lstm_model.pth")
-        model.load_state_dict(torch.load(original_model_path, map_location=device))
-        st.info("ℹ️ Using original model (extended model not found)")
-    except:
-        st.error("❌ Could not load any model. Please check model files.")
-        st.stop()
-
+model = CharLSTM(vocab_size, use_dropout=False).to(device)  # Original model architecture
+model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 model.eval()
+
+st.success("✅ Model loaded successfully!")
 
 # TEXT GENERATION FUNCTIONS
 def clean_text(text):
@@ -77,7 +64,7 @@ def sample_with_top_k(probs, k=15):
     top_k_probs /= top_k_probs.sum()
     return np.random.choice(top_k_idx, p=top_k_probs)
 
-def generate_text(model, start_text="Once upon a time", length=300, temperature=0.4):
+def generate_text(model, start_text="Once upon a time", length=300, temperature=0.3):
     model.eval()
     start_text = start_text.lower().strip()
     
@@ -97,11 +84,11 @@ def generate_text(model, start_text="Once upon a time", length=300, temperature=
             output, hidden = model(input_seq, hidden)
             logits = output[:, -1, :] / temperature
             probs = torch.softmax(logits, dim=-1).cpu().numpy().ravel()
-            next_idx = sample_with_top_k(probs, k=15)
+            next_idx = sample_with_top_k(probs, k=10)  # More focused sampling
             next_char = itos[next_idx]
             
             # Stop at sentence boundaries for better readability
-            if next_char == '.' and i > 50:
+            if next_char == '.' and i > 40:
                 generated.append(next_char)
                 break
                 
@@ -127,7 +114,7 @@ st.write("• 'the analysis reveals'")
 
 prompt = st.text_input("Enter a starting prompt:", "the study shows that")
 length = st.slider("Text Length", min_value=50, max_value=200, value=100, step=25)
-temperature = st.slider("Creativity (Temperature)", min_value=0.1, max_value=0.8, value=0.3, step=0.1)
+temperature = st.slider("Creativity (Temperature)", min_value=0.1, max_value=0.6, value=0.2, step=0.05)
 
 if st.button("Generate Text"):
     with st.spinner("Generating..."):
