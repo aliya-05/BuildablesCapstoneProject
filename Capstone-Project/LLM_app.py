@@ -55,7 +55,6 @@ model = CharLSTM(vocab_size).to(device)
 try:
     model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
     model.eval()
-    st.success("✅ Extended model loaded successfully!")
 except Exception as e:
     st.error(f"❌ Could not load extended model: {str(e)}")
     st.stop()
@@ -112,10 +111,7 @@ def generate_text(model, start_text="Once upon a time", length=300, temperature=
 st.title("Character-Level LSTM Text Generator (Extended Model)")
 st.write("Generate creative text sequences using your extended trained LSTM model!")
 
-# Model info display
-st.write(f"**Model Loaded:** {MODEL_PATH}")
-st.write(f"**Vocabulary Size:** {vocab_size}")
-st.write(f"**Training Data Size:** 1.5M characters")
+
 
 # Suggest better prompts for the academic model
 st.write("**Suggested prompts for best results:**")
@@ -145,18 +141,3 @@ if st.button("Generate Text"):
         )
 
 st.caption("Extended Character-Level LSTM Text Generation (Buildables Capstone Project)")
-
-# Display model info in sidebar
-with st.sidebar:
-    st.header("Model Information")
-    st.write(f"**Device:** {device}")
-    st.write(f"**Vocabulary:** {vocab_size} characters")
-    st.write(f"**Architecture:** 2-layer LSTM with dropout")
-    st.write(f"**Training:** Extended epochs on 1.5M chars")
-    
-    st.header("Generation Settings")
-    st.write("**Temperature:** Controls creativity")
-    st.write("• Lower (0.1-0.3): More focused")
-    st.write("• Higher (0.4-0.6): More creative")
-    
-    st.write("**Top-K Sampling:** Uses top 20 most likely characters")
