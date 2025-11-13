@@ -41,7 +41,17 @@ class CharLSTM(nn.Module):
 # LOAD MODEL
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = CharLSTM(vocab_size).to(device)
-model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
+
+# Try to load extended model, fallback to original if it fails
+try:
+    model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
+    st.success("Extended model loaded successfully!")
+except:
+    # Fallback to original model
+    original_model_path = os.path.join(current_dir, "char_lstm_model.pth")
+    model.load_state_dict(torch.load(original_model_path, map_location=device))
+    st.warning("Using original model (extended model not compatible)")
+
 model.eval()
 
 # TEXT GENERATION FUNCTIONS
