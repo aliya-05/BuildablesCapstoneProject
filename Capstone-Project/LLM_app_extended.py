@@ -64,7 +64,7 @@ except Exception as e:
 def clean_text(text):
     text = text.replace("Ġ", " ")
     text = re.sub(r'\s+', ' ', text)
-    text = re.sub(r'[^A-Za-z0-9.,!?\'"\n ]', '', text)
+    text = re.sub(r'[^A-Za-z0-9.,!?\'"\\n ]', '', text)
     text = text.replace(" .", ".").replace(" ,", ",")
     text = ' '.join(text.split())
     return text.strip()
@@ -75,7 +75,7 @@ def sample_with_top_k(probs, k=20):
     top_k_probs /= top_k_probs.sum()
     return np.random.choice(top_k_idx, p=top_k_probs)
 
-def generate_text(model, start_text="Once upon a time", length=300, temperature=0.3):
+def generate_text(model, start_text="the study shows", length=150, temperature=0.3):
     model.eval()
     start_text = start_text.lower().strip()
     
@@ -99,7 +99,7 @@ def generate_text(model, start_text="Once upon a time", length=300, temperature=
             next_char = itos[next_idx]
             
             # Stop at sentence boundaries for better readability
-            if next_char == '.' and i > 40:
+            if next_char == '.' and i > 50:
                 generated.append(next_char)
                 break
                 
@@ -127,7 +127,7 @@ st.write("• 'in this research we'")
 
 prompt = st.text_input("Enter a starting prompt:", "the study shows that")
 length = st.slider("Text Length", min_value=50, max_value=200, value=100, step=25)
-temperature = st.slider("Creativity (Temperature)", min_value=0.1, max_value=0.6, value=0.2, step=0.05)
+temperature = st.slider("Creativity (Temperature)", min_value=0.1, max_value=0.6, value=0.3, step=0.05)
 
 if st.button("Generate Text"):
     with st.spinner("Generating..."):
